@@ -1,7 +1,5 @@
-import React, { useState } from 'react';
-import dummyevents from './dummyevents.json';
-import { Paper, Typography, List, ListItem, ListItemIcon, ListItemText } from '@mui/material';
-import EventIcon from '@mui/icons-material/Event';
+import React, { useEffect, useState } from 'react';
+import { Paper, Typography, List, ListItem, ListItemText } from '@mui/material';
 import { useParams } from 'react-router';
 
 const styles = {
@@ -74,26 +72,35 @@ const styles = {
 };
 
 const EventDetails = () => {
-  const { id } = useParams();
-  const event = dummyevents.events;
-  const eventId = parseInt(id);
-  const data = event.filter((e) => e.id === eventId);
+    const { id } = useParams();
+    const [event, setEvent] = useState(null);
+    
+    useEffect(() => {
+      fetch(`/api/events/${id}`)
+        .then(response => response.json())
+        .then(data => {
+            console.log(data); // Log the fetched event data
+            setEvent(data);
+          });
+    }, [id]);
+  
+    if (!event) {
+      return null; // Render loading indicator or handle the case when the event is not found
+    }
 
-  return (
-    <div style={styles.container}>
-      <Paper style={styles.paper}>
-        <Typography variant="h4" style={styles.heading}>
-          Event Details
-        </Typography>
-        {data.map((event) => (
-          <List key={event.id}>
+    // console.log("e",event.event.title);
+  
+    return (
+      <div style={styles.container}>
+        <Paper style={styles.paper}>
+          <Typography variant="h4" style={styles.heading}>
+            Event Details
+          </Typography>
+          <List>
             <ListItem style={styles.listItem}>
-              {/* <ListItemIcon>
-                <EventIcon color="primary" />
-              </ListItemIcon> */}
               <ListItemText>
                 <Typography variant="h5" style={styles.title}>
-                  {event.title}
+                  {event.event.title}
                 </Typography>
                 <div style={styles.details}>
                   <div style={styles.detailItem}>
@@ -101,7 +108,7 @@ const EventDetails = () => {
                       Date:
                     </Typography>
                     <Typography variant="body1" style={styles.detailText}>
-                      {event.date}
+                      {event.event.date}
                     </Typography>
                   </div>
                   <div style={styles.detailItem}>
@@ -109,7 +116,7 @@ const EventDetails = () => {
                       Time:
                     </Typography>
                     <Typography variant="body1" style={styles.detailText}>
-                      {event.time}
+                      {event.event.time}
                     </Typography>
                   </div>
                   <div style={styles.detailItem}>
@@ -117,20 +124,19 @@ const EventDetails = () => {
                       Location:
                     </Typography>
                     <Typography variant="body1" style={styles.detailText}>
-                      {event.location}
+                      {event.event.location}
                     </Typography>
                   </div>
                 </div>
                 <Typography variant="body1" style={styles.description}>
-                  {event.description}
+                  {event.event.description}
                 </Typography>
               </ListItemText>
             </ListItem>
           </List>
-        ))}
-      </Paper>
-    </div>
-  );
-};
-
-export default EventDetails;
+        </Paper>
+      </div>
+    );
+  };
+  
+  export default EventDetails;
