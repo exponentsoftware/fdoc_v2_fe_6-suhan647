@@ -50,36 +50,36 @@ export function makeServer() {
         events: [
             {
                 "id": 1,
-                "title": "Example Event 1",
+                "title": "Event 1",
                 "date": "2023-05-20",
                 "time": "15:00",
-                "location": "Example Venue 1",
-                "description": "This is an example event description."
+                "location": "Venue 1",
+                "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Tortor pretium viverra" 
               },
               {
                 "id": 2,
-                "title": "Example Event 2",
+                "title": "Event 2",
                 "date": "2023-05-22",
                 "time": "18:30",
-                "location": "Example Venue 2",
-                "description": "This is another example event description."
+                "location": "Venue 2",
+                "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Tortor pretium viverra" 
               },
-              {
-                "id": 3,
-                "title": "Example Event 3",
-                "date": "2023-05-25",
-                "time": "09:00",
-                "location": "Example Venue 3",
-                "description": "Yet another example event description."
-              },
-              {
-                "id": 4,
-                "title": "Example Event 4",
-                "date": "2023-05-22",
-                "time": "18:30",
-                "location": "Example Venue 4",
-                "description": "This is another example event description."
-              }
+              // {
+              //   "id": 3,
+              //   "title": "Event 3",
+              //   "date": "2023-05-25",
+              //   "time": "09:00",
+              //   "location": "Venue 3",
+              //   "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Tortor pretium viverra" 
+              // },
+              // {
+              //   "id": 4,
+              //   "title": "Event 4",
+              //   "date": "2023-05-22",
+              //   "time": "18:30",
+              //   "location": "Venue 4",
+              //   "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Tortor pretium viverra" 
+              // }
         ],
       });
     },
