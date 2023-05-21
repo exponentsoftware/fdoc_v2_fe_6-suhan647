@@ -3,15 +3,15 @@ import { createServer, Model, RestSerializer } from 'miragejs';
 export function makeServer() {
   const server = createServer({
     models: {
-      event: Model, // Define the "event" model
+      event: Model, 
     },
 
     serializers: {
-      application: RestSerializer, // Use the REST serializer
+      application: RestSerializer, 
     },
 
     routes() {
-      this.namespace = '/api'; // Set the API namespace
+      this.namespace = '/api'; 
 
       // GET /api/events
       this.get('/events', (schema) => {
@@ -78,30 +78,6 @@ export function makeServer() {
                 "date": "2023-05-22",
                 "time": "18:30",
                 "location": "Example Venue 4",
-                "description": "This is another example event description."
-              },
-              {
-                "id": 5,
-                "title": "Example Event 5",
-                "date": "2023-05-22",
-                "time": "18:30",
-                "location": "Example Venue 5",
-                "description": "This is another example event description."
-              },
-              {
-                "id": 6,
-                "title": "Example Event 6",
-                "date": "2023-05-22",
-                "time": "18:30",
-                "location": "Example Venue 6",
-                "description": "This is another example event description."
-              },
-              {
-                "id": 7,
-                "title": "Example Event 7",
-                "date": "2023-05-22",
-                "time": "18:30",
-                "location": "Example Venue 7",
                 "description": "This is another example event description."
               }
         ],

@@ -1,142 +1,128 @@
 import React, { useEffect, useState } from 'react';
-import { Paper, Typography, List, ListItem, ListItemText } from '@mui/material';
+import { Paper, Typography, List, ListItem, ListItemText, Container, Grid, Box } from '@mui/material';
 import { useParams } from 'react-router';
+import { styled } from '@mui/system';
 
-const styles = {
-  container: {
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    minHeight: '100vh',
-    backgroundColor: '#f2f2f2',
-  },
-  paper: {
-    padding: '20px',
-    borderRadius: '4px',
-    boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
-    backgroundColor: '#ffffff',
-    maxWidth: '500px',
-    width: '100%',
-    margin: '20px',
-  },
-  heading: {
-    marginBottom: '20px',
-    fontSize: '24px',
-    fontWeight: 'bold',
-    textAlign: 'center',
-    color: '#333333',
-  },
-  listItem: {
-    marginBottom: '20px',
-    border: '1px solid #eeeeee',
-    borderRadius: '4px',
-    padding: '20px',
-    backgroundColor: '#f9f9f9',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    flexDirection: 'column',
-  },
-  title: {
-    display:'flex',
-    justifyContent:'center',
-    fontSize: '18px',
-    fontWeight: 'bold',
-    margin: '0',
-    color: 'green',
-  },
-  details: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    marginTop: '20px',
-  },
-  detailItem: {
-    marginBottom: '10px',
-    textAlign: 'center',
-    color: '#777777',
-    display: 'flex',
-    alignItems: 'center',
-  },
-  detailLabel: {
-    marginRight: '8px',
-    color: '#888888',
-  },
-  detailText: {
-    color: '#555555',
-  },
-  description: {
-    color: '#555555',
-    textAlign: 'center',
-  },
-};
+const StyledPaper = styled(Paper)(({ theme }) => ({
+  padding: theme.spacing(4),
+  borderRadius: '4px',
+  boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
+  backgroundColor: '#ffffff',
+}));
+
+const StyledHeading = styled(Typography)(({ theme }) => ({
+  marginBottom: theme.spacing(4),
+  fontSize: '2rem',
+  fontWeight: 'bold',
+  textAlign: 'center',
+  color: '#333333',
+}));
+
+const StyledTitle = styled(Typography)(({ theme }) => ({
+  display: 'flex',
+  justifyContent: 'center',
+  fontSize: '1.5rem',
+  fontWeight: 'bold',
+  margin: '0',
+  color: 'green',
+}));
+
+const StyledDetailLabel = styled(Typography)(({ theme }) => ({
+  marginRight: theme.spacing(1),
+  marginTop:'30px',
+  color: '#888888',
+}));
+
+const StyledDetailText = styled(Typography)(({ theme }) => ({
+  color: '#555555',
+}));
+
+const StyledDescription = styled(Typography)(({ theme }) => ({
+  color: '#555555',
+  textAlign: 'center',
+  marginTop:'30px',
+}));
 
 const EventDetails = () => {
-    const { id } = useParams();
-    const [event, setEvent] = useState(null);
-    
-    useEffect(() => {
-      fetch(`/api/events/${id}`)
-        .then(response => response.json())
-        .then(data => {
-            console.log(data); // Log the fetched event data
-            setEvent(data);
-          });
-    }, [id]);
-  
-    if (!event) {
-      return null; // Render loading indicator or handle the case when the event is not found
-    }
+  const { id } = useParams();
+  const [event, setEvent] = useState(null);
 
-    // console.log("e",event.event.title);
-  
-    return (
-      <div style={styles.container}>
-        <Paper style={styles.paper}>
-          <Typography variant="h4" style={styles.heading}>
+  useEffect(() => {
+    fetch(`/api/events/${id}`)
+      .then(response => response.json())
+      .then(data => {
+        console.log(data);
+        setEvent(data);
+      });
+  }, [id]);
+
+  if (!event) {
+    return <h1>Loading .....</h1>; 
+  }
+
+  return (
+    <Box
+      sx={{
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        minHeight: '100vh',
+        backgroundColor: '#f2f2f2',
+      }}
+    >
+      <Container maxWidth="md">
+        <StyledPaper>
+          <StyledHeading variant="h2">
             Event Details
-          </Typography>
+          </StyledHeading>
           <List>
-            <ListItem style={styles.listItem}>
+            <ListItem>
               <ListItemText>
-                <Typography variant="h5" style={styles.title}>
+                <StyledTitle variant="h4">
                   {event.event.title}
-                </Typography>
-                <div style={styles.details}>
-                  <div style={styles.detailItem}>
-                    <Typography variant="body1" style={styles.detailLabel}>
-                      Date:
-                    </Typography>
-                    <Typography variant="body1" style={styles.detailText}>
-                      {event.event.date}
-                    </Typography>
-                  </div>
-                  <div style={styles.detailItem}>
-                    <Typography variant="body1" style={styles.detailLabel}>
-                      Time:
-                    </Typography>
-                    <Typography variant="body1" style={styles.detailText}>
-                      {event.event.time}
-                    </Typography>
-                  </div>
-                  <div style={styles.detailItem}>
-                    <Typography variant="body1" style={styles.detailLabel}>
-                      Location:
-                    </Typography>
-                    <Typography variant="body1" style={styles.detailText}>
-                      {event.event.location}
-                    </Typography>
-                  </div>
-                </div>
-                <Typography variant="body1" style={styles.description}>
+                </StyledTitle>
+                <Grid container spacing={4}>
+                  <Grid item xs={12} sm={4}>
+                    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                      <StyledDetailLabel variant="body1">
+                      <b>  Date:</b>
+                      </StyledDetailLabel>
+                      <StyledDetailText variant="body1">
+                        {event.event.date}
+                      </StyledDetailText>
+                    </div>
+                  </Grid>
+                  <Grid item xs={12} sm={4}>
+                    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                      <StyledDetailLabel variant="body1">
+                       <b> Time:</b>
+                      </StyledDetailLabel>
+                      <StyledDetailText variant="body1">
+                        {event.event.time}
+                      </StyledDetailText>
+                    </div>
+                  </Grid>
+                  <Grid item xs={12} sm={4}>
+                    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                      <StyledDetailLabel variant="body1">
+                        <b>Location:</b>
+                      </StyledDetailLabel>
+                      <StyledDetailText variant="body1">
+                        {event.event.location}
+                      </StyledDetailText>
+                    </div>
+                  </Grid>
+                </Grid>
+                <StyledDescription variant="body1">
                   {event.event.description}
-                </Typography>
+                </StyledDescription>
               </ListItemText>
             </ListItem>
           </List>
-        </Paper>
-      </div>
-    );
-  };
-  
-  export default EventDetails;
+        </StyledPaper>
+      </Container>
+    </Box>
+  );
+};
+
+export default EventDetails;

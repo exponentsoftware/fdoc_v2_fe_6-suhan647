@@ -52,7 +52,7 @@ const EventList = () => {
   const [events, setEvents] = useState([]);
 
   useEffect(() => {
-    fetch('/api/events') // Assuming your MirageJS server is running on the same host
+    fetch('/api/events') 
       .then((response) => response.json())
       .then((data) => setEvents(data.events))
       .catch((error) => console.error('Error fetching events:', error));
